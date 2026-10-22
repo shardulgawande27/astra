@@ -1,0 +1,145 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: 248 248 250;
+    --panel: 255 255 255;
+    --subtle: 241 241 244;
+    --border: 226 226 232;
+    --fg: 24 24 27;
+    --muted: 105 105 116;
+    --accent: 79 70 229;
+    --accent-text: 67 56 202;
+    color-scheme: light;
+  }
+  .dark {
+    --bg: 10 10 12;
+    --panel: 17 17 20;
+    --subtle: 26 26 31;
+    --border: 38 38 44;
+    --fg: 230 230 235;
+    --muted: 150 150 162;
+    --accent: 99 102 241;
+    --accent-text: 165 170 255;
+    color-scheme: dark;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+  body {
+    @apply bg-bg text-fg font-sans antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+  ::selection {
+    @apply bg-accent/30;
+  }
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent/60 ring-offset-0;
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--border)) transparent;
+  }
+}
+
+@layer components {
+  .panel {
+    @apply rounded-lg border border-border bg-panel;
+  }
+  .section-title {
+    @apply text-xs font-semibold uppercase tracking-wider text-muted;
+  }
+  .input-base {
+    @apply w-full rounded-md border border-border bg-bg px-3 text-sm text-fg placeholder:text-muted/70
+      transition-colors hover:border-muted/50 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25;
+  }
+  .prose-text {
+    @apply whitespace-pre-wrap break-words text-sm leading-relaxed text-fg/90;
+  }
+  .kbd {
+    @apply rounded border border-border bg-subtle px-1.5 py-0.5 font-mono text-[10px] text-muted;
+  }
+}
+
+/* Show operators exactly as typed (no `===` → `≡` ligatures from fonts like Cascadia Code). */
+.font-mono,
+code,
+pre,
+.cm-editor .cm-scroller {
+  font-variant-ligatures: none;
+  font-feature-settings: 'liga' 0, 'calt' 0;
+}
+
+/* Syntax highlighting for the read-only viewer (Lezer classHighlighter classes). */
+.code-view {
+  --tok-keyword: 197 134 192;
+  --tok-string: 152 195 121;
+  --tok-number: 209 154 102;
+  --tok-comment: 106 115 125;
+  --tok-def: 97 175 239;
+  --tok-prop: 224 108 117;
+  --tok-op: 86 182 194;
+  --tok-type: 229 192 123;
+}
+html:not(.dark) .code-view {
+  --tok-keyword: 160 40 160;
+  --tok-string: 40 120 40;
+  --tok-number: 170 90 20;
+  --tok-comment: 120 125 135;
+  --tok-def: 30 90 200;
+  --tok-prop: 180 40 60;
+  --tok-op: 20 120 140;
+  --tok-type: 150 100 0;
+}
+.code-view .tok-keyword,
+.code-view .tok-modifier,
+.code-view .tok-controlKeyword {
+  color: rgb(var(--tok-keyword));
+}
+.code-view .tok-string,
+.code-view .tok-string2 {
+  color: rgb(var(--tok-string));
+}
+.code-view .tok-number,
+.code-view .tok-bool,
+.code-view .tok-atom {
+  color: rgb(var(--tok-number));
+}
+.code-view .tok-comment {
+  color: rgb(var(--tok-comment));
+  font-style: italic;
+}
+.code-view .tok-definition,
+.code-view .tok-variableName2 {
+  color: rgb(var(--tok-def));
+}
+.code-view .tok-propertyName {
+  color: rgb(var(--tok-prop));
+}
+.code-view .tok-operator {
+  color: rgb(var(--tok-op));
+}
+.code-view .tok-typeName,
+.code-view .tok-className {
+  color: rgb(var(--tok-type));
+}
+
+/* CodeMirror editor chrome. */
+.cm-theme,
+.cm-editor {
+  border-radius: 0.375rem;
+}
+.cm-editor {
+  font-size: 13px;
+}
+.cm-editor .cm-scroller {
+  font-family: 'JetBrains Mono', 'Cascadia Code', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+.cm-editor.cm-focused {
+  outline: none;
+}
